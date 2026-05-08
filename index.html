@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zombie Project</title>
 
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      background: #000;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .page {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* Page 1 视频页 */
+    #page1 video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .next-after-video {
+      display: none;
+      position: absolute;
+      right: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 80px;
+      color: white;
+      cursor: pointer;
+      z-index: 10;
+      text-shadow: 0 0 20px black;
+    }
+
+    .next-after-video.show {
+      display: block;
+    }
+
+    /* 通用左右箭头 */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 70px;
+      cursor: pointer;
+      z-index: 20;
+      color: white;
+      text-shadow: 0 0 15px black;
+      user-select: none;
+    }
+
+    .arrow.left {
+      left: 40px;
+    }
+
+    .arrow.right {
+      right: 40px;
+    }
+
+    /* Page 2 */
+    #page2 {
+      background: url("assets/page2-bg.jpg") center/cover no-repeat;
+    }
+
+    .button-group {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 30px;
+      z-index: 15;
+    }
+
+    .game-btn {
+      padding: 18px 34px;
+      border: 1px solid rgba(255,255,255,0.7);
+      background: rgba(0,0,0,0.55);
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: 0.25s;
+    }
+
+    .game-btn:hover {
+      background: rgba(255, 80, 40, 0.75);
+      transform: translateY(-4px);
+    }
+
+    .info-box {
+      display: none;
+      position: absolute;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 520px;
+      padding: 28px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.4);
+      backdrop-filter: blur(8px);
+      z-index: 30;
+    }
+
+    .info-box.show {
+      display: block;
+    }
+
+    .info-box h2 {
+      margin-bottom: 12px;
+      color: #ff7845;
+    }
+
+    /* Page 3 平面图 */
+    #page3 {
+      background: url("assets/page3-flat.jpg") center/contain no-repeat;
+      background-color: #000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Page 1：视频页 -->
+  <section id="page1" class="page active">
+    <video id="introVideo" autoplay muted playsinline>
+      <source src="assets/intro.mp4" type="video/mp4" />
+    </video>
+
+    <div id="goPage2" class="next-after-video">&gt;</div>
+  </section>
+
+  <!-- Page 2：可点击按钮页 -->
+  <section id="page2" class="page">
+    <div class="arrow left" onclick="goToPage(1)">&lt;</div>
+    <div class="arrow right" onclick="goToPage(3)">&gt;</div>
+
+    <div class="button-group">
+      <button class="game-btn" onclick="showInfo('darkzone')">DARK ZONE</button>
+      <button class="game-btn" onclick="showInfo('convoy')">CONVOY</button>
+      <button class="game-btn" onclick="showInfo('hive')">HIVE</button>
+    </div>
+
+    <div id="infoBox" class="info-box">
+      <h2 id="infoTitle"></h2>
+      <p id="infoText"></p>
+    </div>
+  </section>
+
+  <!-- Page 3：平面展示页 -->
+  <section id="page3" class="page">
+    <div class="arrow left" onclick="goToPage(2)">&lt;</div>
+  </section>
+
+  <script>
+    const pages = document.querySelectorAll(".page");
+    const introVideo = document.getElementById("introVideo");
+    const goPage2 = document.getElementById("goPage2");
+
+    introVideo.addEventListener("ended", () => {
+      goPage2.classList.add("show");
+    });
+
+    goPage2.addEventListener("click", () => {
+      goToPage(2);
+    });
+
+    function goToPage(pageNumber) {
+      pages.forEach(page => page.classList.remove("active"));
+      document.getElementById("page" + pageNumber).classList.add("active");
+    }
+
+    function showInfo(type) {
+      const infoBox = document.getElementById("infoBox");
+      const infoTitle = document.getElementById("infoTitle");
+      const infoText = document.getElementById("infoText");
+
+      if (type === "darkzone") {
+        infoTitle.innerText = "DARK ZONE";
+        infoText.innerText = "A high-risk infected area where survivors must enter carefully to search for resources.";
+      }
+
+      if (type === "convoy") {
+        infoTitle.innerText = "CONVOY";
+        infoText.innerText = "A moving supply route protected by survivors, carrying weapons, food, and medical kits.";
+      }
+
+      if (type === "hive") {
+        infoTitle.innerText = "HIVE";
+        infoText.innerText = "The infected nest where mutation, danger, and hidden rewards exist at the same time.";
+      }
+
+      infoBox.classList.add("show");
+    }
+  </script>
+
+</body>
+</html>
