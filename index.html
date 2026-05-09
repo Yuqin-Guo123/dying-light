@@ -204,10 +204,9 @@
     const previewBox = document.getElementById("previewBox");
     const previewImage = document.getElementById("previewImage");
 
-    introVideo.addEventListener("ended", () => {
-      goPage2.classList.add("show");
-    });
-
+    setTimeout(() => {
+  goPage2.classList.add("show");
+}, 10000);
     goPage2.addEventListener("click", () => {
       goToPage(2);
     });
