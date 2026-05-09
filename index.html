@@ -155,7 +155,7 @@
 <body>
 
   <section id="page1" class="page active">
-    <video id="introVideo" autoplay muted playsinline>
+    <video id="introVideo" autoplay muted playsinline id="introVideo">
       <source src="assets/intro.mp4" type="video/mp4" />
     </video>
 
@@ -227,6 +227,9 @@
       previewBox.classList.remove("show");
       previewImage.src = "";
     }
+    document.body.addEventListener("click", () => {
+  introVideo.muted = false;
+}, { once: true });
   </script>
 
 </body>
