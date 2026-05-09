@@ -68,7 +68,7 @@
       transform: translateY(-50%);
       font-size: 48px;
       cursor: pointer;
-      z-index: 50;
+      z-index: 80;
       color: white;
       text-shadow: 0 0 15px black;
       user-select: none;
@@ -93,46 +93,46 @@
       background: url("assets/week_background.png") center/cover no-repeat;
     }
 
+    /* 你的三个按钮 PNG 是 1920×1080整张图，所以必须全屏铺 */
     .icon-button {
       position: absolute;
-      cursor: pointer;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
       z-index: 20;
-      transition: 0.2s;
+      pointer-events: none;
     }
 
-    .icon-button:hover {
-      transform: scale(1.04);
-      filter: brightness(1.2);
+    /* 透明点击区域 */
+    .hit-area {
+      position: absolute;
+      top: 42%;
+      height: 12%;
+      z-index: 35;
+      cursor: pointer;
     }
 
-    #newGameBtn {
-  left: 4.5%;
-  top: 42%;
-  width: 29%;
-  height: 16%;
-  object-fit: contain;
-}
+    #newGameHit {
+      left: 5%;
+      width: 28%;
+    }
 
-#legendBtn {
-  left: 35.5%;
-  top: 42%;
-  width: 29%;
-  height: 16%;
-  object-fit: contain;
-}
+    #legendHit {
+      left: 36%;
+      width: 28%;
+    }
 
-#nightmareBtn {
-  right: 4.5%;
-  top: 42%;
-  width: 29%;
-  height: 16%;
-  object-fit: contain;
-}
+    #nightmareHit {
+      right: 5%;
+      width: 28%;
+    }
 
     .preview-box {
       display: none;
       position: absolute;
-      z-index: 35;
+      z-index: 50;
       background: rgba(0, 0, 0, 0.65);
       box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
       overflow: hidden;
@@ -153,8 +153,8 @@
       position: absolute;
       top: 8px;
       right: 12px;
-      z-index: 40;
-      font-size: 28px;
+      z-index: 60;
+      font-size: 32px;
       line-height: 1;
       cursor: pointer;
       color: white;
@@ -162,8 +162,8 @@
     }
 
     #page3 {
-     background: url("assets/restored_land.png") center/cover no-repeat;
-  background-color: #000;
+      background: url("assets/restored_land.png") center/cover no-repeat;
+      background-color: #000;
     }
 
     .music-toggle {
@@ -207,29 +207,29 @@
     <div class="arrow left" onclick="goToPage(1)">&lt;</div>
     <div class="arrow right" onclick="goToPage(3)">&gt;</div>
 
-    <img
-      id="newGameBtn"
-      class="icon-button"
-      src="assets/New_Game_icon.png"
-      onclick="showPreview('assets/KeyVisual.jpg', 'newGameBtn')"
-      alt="New Game"
-    />
+    <!-- 三个按钮图层：全屏叠加 -->
+    <img id="newGameBtn" class="icon-button" src="assets/New_Game_icon.png" alt="New Game" />
+    <img id="legendBtn" class="icon-button" src="assets/legend_icon.png" alt="Legend Levels" />
+    <img id="nightmareBtn" class="icon-button" src="assets/nightmare_icon.png" alt="Nightmare Difficulty" />
 
-    <img
-      id="legendBtn"
-      class="icon-button"
-      src="assets/legend_icon.png"
-      onclick="showPreview('assets/ss_b952654580eb391536d075fe82af5bbd3c9412ec.1920x1080.jpg', 'legendBtn')"
-      alt="Legend Levels"
-    />
+    <!-- 三个真正负责点击的透明区域 -->
+    <div
+      id="newGameHit"
+      class="hit-area"
+      onclick="showPreview('assets/KeyVisual.jpg', 'newGameHit')"
+    ></div>
 
-    <img
-      id="nightmareBtn"
-      class="icon-button"
-      src="assets/nightmare_icon.png"
-      onclick="showPreview('assets/dying-light-the-beast-game-rant-advance-zombies-chimeras-1.avif', 'nightmareBtn')"
-      alt="Nightmare Difficulty"
-    />
+    <div
+      id="legendHit"
+      class="hit-area"
+      onclick="showPreview('assets/ss_b952654580eb391536d075fe82af5bbd3c9412ec.1920x1080.jpg', 'legendHit')"
+    ></div>
+
+    <div
+      id="nightmareHit"
+      class="hit-area"
+      onclick="showPreview('assets/dying-light-the-beast-game-rant-advance-zombies-chimeras-1.avif', 'nightmareHit')"
+    ></div>
 
     <div id="previewBox" class="preview-box">
       <div class="close-preview" onclick="closePreview()">×</div>
@@ -277,9 +277,9 @@
       previewImage.src = imagePath;
 
       previewBox.style.left = targetRect.left - pageRect.left + "px";
-      previewBox.style.top = targetRect.top - pageRect.top - 18 + "px";
+      previewBox.style.top = targetRect.top - pageRect.top - 10 + "px";
       previewBox.style.width = targetRect.width + "px";
-      previewBox.style.height = targetRect.height + "px";
+      previewBox.style.height = targetRect.height * 1.65 + "px";
 
       previewBox.classList.add("show");
     }
