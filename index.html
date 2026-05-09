@@ -149,6 +149,26 @@
       background: url("assets/restored_land.png") center/contain no-repeat;
       background-color: #000;
     }
+    .music-toggle {
+  position: absolute;
+  right: 35px;
+  bottom: 30px;
+  width: 70px;
+  height: 70px;
+  z-index: 100;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.music-toggle:hover {
+  transform: scale(1.08);
+}
+
+.music-toggle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
   </style>
 </head>
 
@@ -160,6 +180,9 @@
     </video>
 
     <div id="goPage2" class="next-after-video">&gt;</div>
+    <div class="music-toggle" onclick="toggleMusic()">
+  <img src="assets/music_icon.png" alt="music" />
+</div>
   </section>
 
   <section id="page2" class="page">
@@ -196,6 +219,7 @@
   <section id="page3" class="page">
     <div class="arrow left" onclick="goToPage(2)">&lt;</div>
   </section>
+  
 
   <script>
     const pages = document.querySelectorAll(".page");
@@ -226,9 +250,10 @@
       previewBox.classList.remove("show");
       previewImage.src = "";
     }
-    document.body.addEventListener("click", () => {
-  introVideo.muted = false;
-}, { once: true });
+    
+    function toggleMusic() {
+  introVideo.muted = !introVideo.muted;
+}
   </script>
 
 </body>
