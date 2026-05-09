@@ -107,20 +107,20 @@
 
     #newGameBtn {
       left: 5.5%;
-      top: 43%;
-      width: 32%;
+      top: 39%;
+      width: 31%;
     }
 
     #legendBtn {
-      left: 34%;
-      top: 43%;
-      width: 32%;
+      left: 34.5%;
+      top: 39%;
+      width: 31%;
     }
 
     #nightmareBtn {
       right: 5.5%;
-      top: 43%;
-      width: 32%;
+      top: 39%;
+      width: 31%;
     }
 
     .preview-box {
@@ -254,6 +254,13 @@
       pages.forEach(page => page.classList.remove("active"));
       document.getElementById("page" + pageNumber).classList.add("active");
       closePreview();
+
+      if (pageNumber === 1) {
+        introVideo.play();
+      } else {
+        introVideo.pause();
+        introVideo.muted = true;
+      }
     }
 
     function showPreview(imagePath, targetId) {
@@ -264,7 +271,7 @@
       previewImage.src = imagePath;
 
       previewBox.style.left = targetRect.left - pageRect.left + "px";
-      previewBox.style.top = targetRect.top - pageRect.top + "px";
+      previewBox.style.top = targetRect.top - pageRect.top - 18 + "px";
       previewBox.style.width = targetRect.width + "px";
       previewBox.style.height = targetRect.height + "px";
 
